@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cadastro - Samyll Beauty</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --bg-principal: #f7f3ed;
+      --rosa-principal: #dba1a2;
+      --rosa-claro: #efd8d6;
+      --verde-neutro: #c2c6b9;
+      --marrom-escuro: #422b23;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--bg-principal), var(--rosa-claro));
+      padding: 20px;
+    }
+
+    .container {
+      background-color: var(--bg-principal);
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      overflow: hidden;
+      border: 1px solid var(--rosa-claro);
+    }
+
+    /* Lado esquerdo – identidade visual */
+    .hero {
+      flex: 1;
+      background: radial-gradient(circle at top, var(--rosa-principal), var(--marrom-escuro));
+      color: #f7f3ed;
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: 32px;
+      letter-spacing: 2px;
+    }
+
+    .logo span {
+      display: block;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin-top: 4px;
+    }
+
+    .hero-text {
+      margin-top: 40px;
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.95;
+    }
+
+    .hero-tag {
+      margin-top: 24px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--rosa-claro);
+    }
+
+    /* Lado direito – formulário */
+    .form-area {
+      flex: 1.2;
+      padding: 32px 32px 40px;
+      background-color: #ffffff;
+    }
+
+    .form-header {
+      margin-bottom: 24px;
+    }
+
+    .form-header h1 {
+      font-size: 24px;
+      color: var(--marrom-escuro);
+      margin-bottom: 4px;
+    }
+
+    .form-header p {
+      font-size: 14px;
+      color: #5c5c5c;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 18px;
+    }
+
+    .full-width {
+      grid-column: 1 / 3;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: var(--marrom-escuro);
+      margin-bottom: 4px;
+    }
+
+    label span.obrigatorio {
+      color: var(--rosa-principal);
+      margin-left: 2px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--rosa-claro);
+      font-size: 14px;
+      outline: none;
+      background-color: var(--bg-principal);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--rosa-principal);
+      box-shadow: 0 0 0 2px rgba(219, 161, 162, 0.35);
+      background-color: #ffffff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .campo-duplo {
+      display: flex;
+      gap: 10px;
+    }
+
+    .campo-duplo > div {
+      flex: 1;
+    }
+
+    .radio-group,
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      font-size: 13px;
+    }
+
+    .radio-group label,
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      margin-bottom: 0;
+    }
+
+    .radio-group input,
+    .checkbox-group input {
+      width: auto;
+    }
+
+    .form-footer {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .termos {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 12px;
+      color: #555555;
+    }
+
+    .termos input {
+      margin-top: 3px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      transition: filter 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--rosa-principal), var(--marrom-escuro));
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(66, 43, 35, 0.35);
+    }
+
+    .btn-secondary {
+      background-color: var(--verde-neutro);
+      color: var(--marrom-escuro);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn-primary:hover,
+    .btn-secondary:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active,
+    .btn-secondary:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .dica {
+      font-size: 11px;
+      color: #777777;
+      margin-top: 4px;
+    }
+
+    /* Responsivo */
+    @media (max-width: 820px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .hero {
+        padding: 24px 22px;
+      }
+
+      .form-area {
+        padding: 24px 22px 28px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      form {
+        grid-template-columns: 1fr;
+      }
+
+      .full-width {
+        grid-column: 1 / 2;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Lado visual -->
+    <aside class="hero">
+      <div>
+        <div class="logo">
+          Samyll
+          <span>Beauty</span>
+        </div>
+        <p class="hero-text">
+          Cadastre-se para receber lembretes de horário, promoções exclusivas e novidades
+          em cabelo, unhas, sobrancelhas e estética.
+        </p>
+      </div>
+      <p class="hero-tag">Sua beleza, seu momento.</p>
+    </aside>
+
+    <!-- Lado do formulário -->
+    <section class="form-area">
+      <div class="form-header">
+        <h1>Cadastro de Cliente</h1>
+        <p>Preencha seus dados para agendar serviços com mais rapidez.</p>
+      </div>
+
+      <form action="#" method="post">
+        <div class="full-width">
+          <label for="nome">Nome completo<span class="obrigatorio">*</span></label>
+          <input type="text" id="nome" name="nome" required placeholder="Ex: Ana Carolina Souza" />
+        </div>
+
+        <div>
+          <label for="telefone">Telefone / WhatsApp<span class="obrigatorio">*</span></label>
+          <input type="tel" id="telefone" name="telefone" required placeholder="(11) 90000-0000" />
+        </div>
+
+        <div>
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="voce@email.com" />
+        </div>
+
+        <div>
+          <label for="data-nasc">Data de nascimento</label>
+          <input type="date" id="data-nasc" name="data-nasc" />
+        </div>
+
+        <div>
+          <label for="cidade">Cidade</label>
+          <input type="text" id="cidade" name="cidade" placeholder="Cidade" />
+        </div>
+
+        <div>
+          <label for="bairro">Bairro</label>
+          <input type="text" id="bairro" name="bairro" placeholder="Bairro" />
+        </div>
+
+        <div>
+          <label for="preferencia-contato">Preferência de contato</label>
+          <select id="preferencia-contato" name="preferencia-contato">
+            <option value="">Selecione</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="ligacao">Ligação</option>
+            <option value="email">E-mail</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="servico-favorito">Serviço favorito</label>
+          <select id="servico-favorito" name="servico-favorito">
+            <option value="">Selecione</option>
+            <option value="cabelo">Cabelo</option>
+            <option value="unhas">Unhas</option>
+            <option value="sobrancelha">Sobrancelhas</option>
+            <option value="make">Maquiagem</option>
+            <option value="estetica">Estética</option>
+          </select>
+        </div>
+
+        <div class="full-width">
+          <label>Melhor período para atendimento</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="periodo" value="manha" />
+              Manhã
+            </label>
+            <label>
+              <input type="radio" name="periodo" value="tarde" />
+              Tarde
+            </label>
+            <label>
+              <input type="radio" name="periodo" value="noite" />
+              Noite
+            </label>
+            <label>
+              <input type="radio" name="periodo" value="flexivel" />
+              Qualquer horário
+            </label>
+          </div>
+        </div>
+
+        <div class="full-width">
+          <label>Interesses</label>
+          <div class="checkbox-group">
+            <label>
+              <input type="checkbox" name="interesses" value="promocoes" />
+              Promoções
+            </label>
+            <label>
+              <input type="checkbox" name="interesses" value="pacotes" />
+              Pacotes especiais
+            </label>
+            <label>
+              <input type="checkbox" name="interesses" value="novidades" />
+              Novidades e lançamentos
+            </label>
+          </div>
+        </div>
+
+        <div class="full-width">
+          <label for="observacoes">Observações (ex: químicas, alergias, preferências)</label>
+          <textarea id="observacoes" name="observacoes" placeholder="Conte o que o salão precisa saber para cuidar melhor de você."></textarea>
+          <p class="dica">Campos com * são obrigatórios.</p>
+        </div>
+
+        <div class="full-width form-footer">
+          <label class="termos">
+            <input type="checkbox" name="aceite" required />
+            <span>
+              Autorizo o envio de mensagens sobre agendamentos, lembretes e ofertas do Samyll Beauty.
+            </span>
+          </label>
+
+          <div class="buttons">
+            <button type="submit" class="btn-primary">Finalizar cadastro</button>
+            <button type="reset" class="btn-secondary">Limpar</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </div>
+</body>
+</html>
