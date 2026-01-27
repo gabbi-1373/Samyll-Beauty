@@ -1,13 +1,225 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Login</title>
-    <link rel="stylesheet" href="login.css">
+    <title>Samyll Beauty - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f7f3ed 0%, #EFD8D6 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background-color: #f7f3ed;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(66, 43, 35, 0.15);
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid #EFD8D6;
+        }
+
+        .login-header {
+            background: linear-gradient(135deg, #dba1a2 0%, #EFD8D6 100%);
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #422B23;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: #422B23;
+            font-size: 14px;
+            opacity: 0.8;
+            letter-spacing: 1px;
+        }
+
+        .login-form {
+            padding: 40px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #422B23;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #EFD8D6;
+            border-radius: 10px;
+            font-size: 15px;
+            background-color: #ffffff;
+            color: #422B23;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #dba1a2;
+            box-shadow: 0 0 0 4px rgba(219, 161, 162, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #C2C6B9;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 25px;
+        }
+
+        .forgot-password a {
+            color: #dba1a2;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #422B23;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #dba1a2 0%, #EFD8D6 100%);
+            border: none;
+            border-radius: 10px;
+            color: #422B23;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(219, 161, 162, 0.3);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: #EFD8D6;
+        }
+
+        .divider span {
+            padding: 0 15px;
+            color: #C2C6B9;
+            font-size: 13px;
+        }
+
+        .signup-link {
+            text-align: center;
+            color: #422B23;
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: #dba1a2;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            color: #422B23;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                border-radius: 15px;
+            }
+
+            .login-header {
+                padding: 30px 20px;
+            }
+
+            .logo {
+                font-size: 28px;
+            }
+
+            .login-form {
+                padding: 30px 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class=""></div>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo">SAMYLL BEAUTY</div>
+            <div class="subtitle">BEM-VINDO DE VOLTA</div>
+        </div>
+
+        <div class="login-form">
+            <form action="#" method="POST">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+
+                <div class="forgot-password">
+                    <a href="#recuperar-senha">Esqueceu sua senha?</a>
+                </div>
+
+                <button type="submit" class="login-button">Entrar</button>
+
+                <div class="divider">
+                    <span>ou</span>
+                </div>
+
+                <div class="signup-link">
+                    Não tem uma conta? <a href="#cadastro">Cadastre-se</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
