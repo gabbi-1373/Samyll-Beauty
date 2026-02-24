@@ -1,30 +1,864 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Trabalhador</title>
-    <link rel="stylesheet" href="home_trabalhador.css">
-</head>
+    <title>Samyll Beauty — Área do Trabalhador</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rose:     #c9847a;
+            --blush:    #f0d5d0;
+            --cream:    #faf6f2;
+            --mocha:    #422b23;
+            --warm-mid: #9b6b60;
+            --soft-gold:#d4a57a;
+            --glass:    rgba(255,255,255,0.55);
+            --shadow:   0 8px 40px rgba(66,43,35,0.12);
+        }
 
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(160deg, #faf6f2 0%, #f0d5d0 45%, #e8c0bb 100%);
+            min-height: 100vh;
+            color: var(--mocha);
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 22px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .logo-area {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+        .logo-area .brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: var(--mocha);
+        }
+        .logo-area .sub {
+            font-size: 0.68rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--warm-mid);
+        }
+
+        .nav-tabs {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .nav-tabs button {
+            background: transparent;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--mocha);
+            padding: 9px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.25s, color 0.25s;
+            position: relative;
+        }
+        .nav-tabs button:hover {
+            background: rgba(201,132,122,0.18);
+        }
+        .nav-tabs button.active {
+            background: var(--mocha);
+            color: #fff;
+        }
+
+        .nav-tabs button.tab-saldo {
+            border: 1.5px solid var(--soft-gold);
+            color: var(--soft-gold);
+        }
+        .nav-tabs button.tab-saldo:hover,
+        .nav-tabs button.tab-saldo.active {
+            background: var(--soft-gold);
+            color: #fff;
+        }
+        .nav-tabs button.tab-higiene {
+            border: 1.5px solid var(--rose);
+            color: var(--rose);
+        }
+        .nav-tabs button.tab-higiene:hover,
+        .nav-tabs button.tab-higiene.active {
+            background: var(--rose);
+            color: #fff;
+        }
+
+        /* ── MAIN CONTENT ── */
+        .main {
+            width: 90%;
+            max-width: 1200px;
+            margin: 36px auto 60px;
+        }
+
+        .panel { display: none; }
+        .panel.active { display: block; animation: fadeIn 0.35s ease; }
+
+        @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+        /* ── HOME PANEL ── */
+        .home-hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+        .home-hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.4rem, 6vw, 4rem);
+            font-weight: 300;
+            font-style: italic;
+            color: var(--mocha);
+            margin-bottom: 12px;
+        }
+        .home-hero p {
+            color: var(--warm-mid);
+            font-size: 0.95rem;
+            letter-spacing: 0.04em;
+        }
+
+        /* Testimonial photos grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        .photo-card {
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 3/4;
+            box-shadow: var(--shadow);
+            cursor: default;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .photo-card:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 20px 60px rgba(66,43,35,0.2); }
+        .photo-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s;
+        }
+        .photo-card:hover img { transform: scale(1.06); }
+        .photo-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(66,43,35,0.72) 0%, transparent 55%);
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 18px 16px;
+        }
+        .photo-overlay .photo-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            font-style: italic;
+            color: #fff;
+            margin-bottom: 3px;
+        }
+        .photo-overlay .photo-quote {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.9);
+            font-style: italic;
+            margin-bottom: 6px;
+            line-height: 1.45;
+        }
+        .testimonials-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-style: italic;
+            font-weight: 300;
+            color: var(--warm-mid);
+            margin-bottom: 22px;
+            text-align: center;
+            letter-spacing: 0.04em;
+        }
+
+        /* ── SERVICE PANEL ── */
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+        .service-header .icon-big { font-size: 2.2rem; }
+        .service-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .no-schedule {
+            background: var(--glass);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 20px;
+            padding: 50px 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        .no-schedule .big-icon { font-size: 3.5rem; margin-bottom: 14px; }
+        .no-schedule h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+        .no-schedule p { color: var(--warm-mid); font-size: 0.9rem; }
+
+        .schedule-grid { display: grid; gap: 16px; }
+
+        .appointment-card {
+            background: var(--glass);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 18px;
+            padding: 22px 26px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            box-shadow: var(--shadow);
+        }
+
+        .appt-left { display: flex; align-items: center; gap: 18px; }
+        .appt-time {
+            background: var(--mocha);
+            color: #fff;
+            border-radius: 12px;
+            padding: 10px 16px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            min-width: 80px;
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .appt-info h4 { font-weight: 500; font-size: 1rem; margin-bottom: 2px; }
+        .appt-info p  { font-size: 0.82rem; color: var(--warm-mid); }
+
+        .appt-right { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        .btn {
+            border: none;
+            border-radius: 50px;
+            padding: 9px 20px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .btn:hover { opacity: 0.85; transform: scale(1.03); }
+        .btn-primary { background: var(--mocha); color: #fff; }
+        .btn-outline  { background: transparent; border: 1.5px solid var(--mocha); color: var(--mocha); }
+        .btn-rose     { background: var(--rose); color: #fff; }
+        .btn-gold     { background: var(--soft-gold); color: #fff; }
+        .btn-green    { background: #7aaa8c; color: #fff; }
+        .btn-red      { background: #c97a7a; color: #fff; }
+        .btn-sm       { padding: 7px 14px; font-size: 0.72rem; }
+
+        /* Ponto */
+        .ponto-section {
+            margin-top: 28px;
+            background: linear-gradient(135deg, rgba(66,43,35,0.06), rgba(201,132,122,0.1));
+            border: 1px dashed rgba(66,43,35,0.25);
+            border-radius: 18px;
+            padding: 28px 30px;
+        }
+        .ponto-section h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            margin-bottom: 18px;
+        }
+        .ponto-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+        .ponto-status { font-size: 0.82rem; color: var(--warm-mid); flex: 1; }
+        .ponto-status span { font-weight: 500; color: var(--mocha); }
+
+        /* ── HIGIENE ── */
+        .higiene-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .higiene-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-style: italic;
+        }
+
+        .material-grid { display: grid; gap: 14px; }
+        .material-card {
+            background: var(--glass);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 16px;
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            box-shadow: var(--shadow);
+        }
+        .material-icon { font-size: 1.6rem; flex-shrink: 0; }
+        .material-info { flex: 1; min-width: 140px; }
+        .material-info h4 { font-size: 0.95rem; font-weight: 500; }
+        .material-info p  { font-size: 0.78rem; color: var(--warm-mid); }
+        .material-status {
+            font-size: 0.72rem;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-weight: 500;
+        }
+        .status-ok     { background: #d4edda; color: #276b40; }
+        .status-low    { background: #fff3cd; color: #856404; }
+        .status-acabou { background: #f8d7da; color: #721c24; }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(66,43,35,0.35);
+            backdrop-filter: blur(6px);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal {
+            background: var(--cream);
+            border-radius: 24px;
+            padding: 36px 32px;
+            width: 90%;
+            max-width: 460px;
+            box-shadow: 0 24px 80px rgba(66,43,35,0.2);
+            animation: fadeIn 0.3s ease;
+        }
+        .modal h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-style: italic;
+            margin-bottom: 22px;
+        }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-mid); margin-bottom: 6px; }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid rgba(66,43,35,0.2);
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            background: #fff;
+            color: var(--mocha);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus { border-color: var(--rose); }
+        .modal-actions { display: flex; gap: 12px; margin-top: 6px; }
+
+        /* ── SALDO ── */
+        .saldo-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .saldo-card {
+            background: var(--glass);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 20px;
+            padding: 28px 22px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .saldo-card .value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--mocha);
+        }
+        .saldo-card .lbl { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm-mid); margin-top: 4px; }
+
+        .saldo-list h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 18px;
+        }
+        .saldo-item {
+            background: var(--glass);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 16px;
+            padding: 16px 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+        }
+        .saldo-item-info h4 { font-size: 0.95rem; font-weight: 500; }
+        .saldo-item-info p  { font-size: 0.78rem; color: var(--warm-mid); }
+        .saldo-item-amount { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: var(--soft-gold); }
+
+        .retirar-box {
+            margin-top: 28px;
+            background: linear-gradient(135deg, rgba(212,165,122,0.12), rgba(201,132,122,0.1));
+            border: 1.5px solid rgba(212,165,122,0.4);
+            border-radius: 18px;
+            padding: 28px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .retirar-box h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            flex: 1;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px);
+            background: var(--mocha);
+            color: #fff;
+            padding: 13px 28px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 200;
+            white-space: nowrap;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .navbar { flex-direction: column; align-items: flex-start; padding: 18px 0; }
+            .nav-tabs { gap: 6px; }
+            .nav-tabs button { font-size: 0.7rem; padding: 7px 11px; }
+            .appointment-card { flex-direction: column; align-items: flex-start; }
+            .appt-right { width: 100%; }
+            .ponto-row { flex-direction: column; align-items: flex-start; }
+            .retirar-box { flex-direction: column; }
+        }
+    </style>
+</head>
 <body>
 
-    <div class="banner">
-        <div class="navbar">
-            <img src="baixados.png" class="logo" width="150">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Cabelo</a></li>
-                <li><a href="#">Sombracelha</a></li>
-                <li><a href="#">Maquiagem</a></li>
-                <li><a href="#">Unha</a></li>
-                <li><a href="#">Botox</a></li>
-            </ul>
+<nav>
+    <div class="navbar">
+        <div class="logo-area">
+            <span class="brand">Samyll Beauty</span>
+            <span class="sub">Área do Trabalhador</span>
+        </div>
+        <div class="nav-tabs">
+            <button class="active" onclick="openPanel('home', this)">🏠 Home</button>
+            <button onclick="openPanel('cabelo', this)">💇 Cabelo</button>
+            <button onclick="openPanel('sobrancelha', this)">✨ Sobrancelha</button>
+            <button onclick="openPanel('maquiagem', this)">💄 Maquiagem</button>
+            <button onclick="openPanel('unha', this)">💅 Unha</button>
+            <button onclick="openPanel('botox', this)">💉 Botox</button>
+            <button class="tab-higiene" onclick="openPanel('higiene', this)">🧴 Higiene</button>
+            <button class="tab-saldo" onclick="openPanel('saldo', this)">💰 Saldo</button>
+        </div>
+    </div>
+</nav>
+
+<main class="main">
+
+    <!-- HOME -->
+    <div id="panel-home" class="panel active">
+        <div class="home-hero">
+            <h1>Bem-vinda, Ana ✨</h1>
+            <p>Hoje é <span id="data-hoje"></span> — confira seus agendamentos e gerencie seu dia.</p>
+        </div>
+        <div class="testimonials-title">Clientes que amaram o resultado 💬</div>
+        <div class="photo-grid">
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1560869713-7d0a29430803?w=400&q=80" alt="Cliente satisfeita">
+                <div class="photo-overlay">
+                    <p class="photo-quote">"Saí completamente renovada! Amei o resultado do cabelo."</p>
+                    <span class="photo-name">— Mariana S.</span>
+                </div>
+            </div>
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80" alt="Cliente satisfeita">
+                <div class="photo-overlay">
+                    <p class="photo-quote">"Atendimento incrível, voltarei sempre!"</p>
+                    <span class="photo-name">— Juliana C.</span>
+                </div>
+            </div>
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1487412912498-0447578fcca8?w=400&q=80" alt="Cliente satisfeita">
+                <div class="photo-overlay">
+                    <p class="photo-quote">"Maquiagem perfeita para o meu evento. Me senti linda!"</p>
+                    <span class="photo-name">— Fernanda M.</span>
+                </div>
+            </div>
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400&q=80" alt="Cliente satisfeita">
+                <div class="photo-overlay">
+                    <p class="photo-quote">"As unhas ficaram impecáveis, super caprichoso!"</p>
+                    <span class="photo-name">— Camila R.</span>
+                </div>
+            </div>
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&q=80" alt="Cliente satisfeita">
+                <div class="photo-overlay">
+                    <p class="photo-quote">"Lugar acolhedor, me senti em casa desde o início."</p>
+                    <span class="photo-name">— Patricia S.</span>
+                </div>
+            </div>
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=400&q=80" alt="Cliente satisfeita">
+                <div class="photo-overlay">
+                    <p class="photo-quote">"Sobrancelha perfeita! Profissional muito habilidosa."</p>
+                    <span class="photo-name">— Aline B.</span>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- CABELO (tem agendamentos) -->
+    <div id="panel-cabelo" class="panel">
+        <div class="service-header">
+            <div class="icon-big">💇</div>
+            <h2>Agendamentos — Cabelo</h2>
+        </div>
+        <div class="schedule-grid" id="cabelo-list"></div>
+        <div class="ponto-section">
+            <h3>🕐 Registro de Ponto</h3>
+            <div class="ponto-row">
+                <div class="ponto-status">
+                    Entrada: <span id="entrada-cabelo">—</span> &nbsp;|&nbsp; Saída: <span id="saida-cabelo">—</span>
+                </div>
+                <button class="btn btn-green btn-sm" onclick="baterPonto('entrada','cabelo')">Bater Entrada</button>
+                <button class="btn btn-red btn-sm"   onclick="baterPonto('saida','cabelo')">Bater Saída</button>
+            </div>
+        </div>
+    </div>
 
+    <!-- SOBRANCELHA (sem agendamentos) -->
+    <div id="panel-sobrancelha" class="panel">
+        <div class="service-header">
+            <div class="icon-big">✨</div>
+            <h2>Agendamentos — Sobrancelha</h2>
+        </div>
+        <div class="no-schedule">
+            <div class="big-icon">📅</div>
+            <h3>Nenhum agendamento para hoje</h3>
+            <p>Aproveite para verificar os materiais de higiene utilizados nos atendimentos anteriores.</p>
+        </div>
+    </div>
+
+    <!-- MAQUIAGEM (sem agendamentos) -->
+    <div id="panel-maquiagem" class="panel">
+        <div class="service-header">
+            <div class="icon-big">💄</div>
+            <h2>Agendamentos — Maquiagem</h2>
+        </div>
+        <div class="no-schedule">
+            <div class="big-icon">📅</div>
+            <h3>Nenhum agendamento para hoje</h3>
+            <p>Sem clientes hoje nesta área. Confira o estoque de materiais na aba Higiene.</p>
+        </div>
+    </div>
+
+    <!-- UNHA (tem agendamentos) -->
+    <div id="panel-unha" class="panel">
+        <div class="service-header">
+            <div class="icon-big">💅</div>
+            <h2>Agendamentos — Unha</h2>
+        </div>
+        <div class="schedule-grid" id="unha-list"></div>
+        <div class="ponto-section">
+            <h3>🕐 Registro de Ponto</h3>
+            <div class="ponto-row">
+                <div class="ponto-status">
+                    Entrada: <span id="entrada-unha">—</span> &nbsp;|&nbsp; Saída: <span id="saida-unha">—</span>
+                </div>
+                <button class="btn btn-green btn-sm" onclick="baterPonto('entrada','unha')">Bater Entrada</button>
+                <button class="btn btn-red btn-sm"   onclick="baterPonto('saida','unha')">Bater Saída</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTOX (sem agendamentos) -->
+    <div id="panel-botox" class="panel">
+        <div class="service-header">
+            <div class="icon-big">💉</div>
+            <h2>Agendamentos — Botox</h2>
+        </div>
+        <div class="no-schedule">
+            <div class="big-icon">📅</div>
+            <h3>Nenhum agendamento para hoje</h3>
+            <p>Área sem atendimentos programados. Tudo tranquilo por aqui!</p>
+        </div>
+    </div>
+
+    <!-- HIGIENE -->
+    <div id="panel-higiene" class="panel">
+        <div class="higiene-header">
+            <h2>🧴 Controle de Higiene</h2>
+            <button class="btn btn-rose" onclick="openModal()">+ Adicionar Material</button>
+        </div>
+        <div class="material-grid" id="material-grid"></div>
+    </div>
+
+    <!-- SALDO -->
+    <div id="panel-saldo" class="panel">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2rem;margin-bottom:26px;">💰 Meu Saldo</h2>
+        <div class="saldo-summary">
+            <div class="saldo-card">
+                <div class="value" id="saldo-dia">R$ 0,00</div>
+                <div class="lbl">Ganho Hoje</div>
+            </div>
+            <div class="saldo-card">
+                <div class="value" id="saldo-semana">R$ 0,00</div>
+                <div class="lbl">Esta Semana</div>
+            </div>
+            <div class="saldo-card">
+                <div class="value" id="saldo-total">R$ 0,00</div>
+                <div class="lbl">Total Disponível</div>
+            </div>
+        </div>
+        <div class="saldo-list">
+            <h3>Atendimentos de hoje</h3>
+            <div id="saldo-items"></div>
+        </div>
+        <div class="retirar-box">
+            <h3>Retirar pagamento do dia</h3>
+            <button class="btn btn-gold" onclick="retirarSaldo()">💸 Retirar Saldo</button>
+        </div>
+    </div>
+
+</main>
+
+<!-- MODAL HIGIENE -->
+<div class="modal-overlay" id="modal-higiene">
+    <div class="modal">
+        <h3>Adicionar Material</h3>
+        <div class="form-group">
+            <label>Nome do Material</label>
+            <input type="text" id="mat-nome" placeholder="Ex: Shampoo, Esmalte, Creme…">
+        </div>
+        <div class="form-group">
+            <label>Categoria</label>
+            <select id="mat-cat">
+                <option value="cabelo">Cabelo</option>
+                <option value="sobrancelha">Sobrancelha</option>
+                <option value="maquiagem">Maquiagem</option>
+                <option value="unha">Unha</option>
+                <option value="botox">Botox</option>
+                <option value="geral">Geral</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Status</label>
+            <select id="mat-status">
+                <option value="ok">Disponível</option>
+                <option value="low">Pouco Estoque</option>
+                <option value="acabou">Acabou</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Observação</label>
+            <textarea id="mat-obs" rows="2" placeholder="Usado em qual atendimento, quantidade, etc."></textarea>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-rose" onclick="addMaterial()">Salvar</button>
+            <button class="btn btn-outline" onclick="closeModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const agendamentos = {
+    cabelo: [
+        { hora: '09:00', cliente: 'Mariana Silva',  servico: 'Escova progressiva',     valor: 120 },
+        { hora: '11:30', cliente: 'Juliana Costa',  servico: 'Coloração + hidratação', valor: 180 },
+        { hora: '14:00', cliente: 'Fernanda Melo',  servico: 'Corte feminino',          valor: 60  },
+    ],
+    unha: [
+        { hora: '10:00', cliente: 'Patricia Souza', servico: 'Gel nas unhas',           valor: 90  },
+        { hora: '13:00', cliente: 'Camila Rocha',   servico: 'Esmaltação em gel',       valor: 70  },
+    ],
+};
+
+const materiais = [
+    { nome: 'Shampoo Hidratante',   cat: 'cabelo',    status: 'ok',     obs: 'Utilizado no atendimento das 11h' },
+    { nome: 'Creme de Coloração',   cat: 'cabelo',    status: 'low',    obs: 'Pouco restante — pedir mais' },
+    { nome: 'Base Líquida',         cat: 'maquiagem', status: 'ok',     obs: '' },
+    { nome: 'Esmalte Cremoso Rosa', cat: 'unha',      status: 'acabou', obs: 'Acabou durante atendimento 13h' },
+    { nome: 'Toxina Botulínica',    cat: 'botox',     status: 'ok',     obs: '' },
+];
+
+const statusLabel = { ok: 'Disponível', low: 'Pouco Estoque', acabou: 'Acabou' };
+const statusClass = { ok: 'status-ok', low: 'status-low', acabou: 'status-acabou' };
+const catIcon = { cabelo:'💇', sobrancelha:'✨', maquiagem:'💄', unha:'💅', botox:'💉', geral:'🧹' };
+
+document.addEventListener('DOMContentLoaded', () => {
+    const d = new Date();
+    document.getElementById('data-hoje').textContent = d.toLocaleDateString('pt-BR', { weekday:'long', day:'numeric', month:'long' });
+    renderSchedule('cabelo');
+    renderSchedule('unha');
+    renderMaterials();
+    renderSaldo();
+});
+
+function openPanel(id, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    if (btn) btn.classList.add('active');
+}
+
+function renderSchedule(area) {
+    const list = document.getElementById(area + '-list');
+    if (!list) return;
+    const items = agendamentos[area] || [];
+    list.innerHTML = items.map(a => `
+        <div class="appointment-card">
+            <div class="appt-left">
+                <div class="appt-time">${a.hora}</div>
+                <div class="appt-info">
+                    <h4>${a.cliente}</h4>
+                    <p>${a.servico} &nbsp;·&nbsp; <strong>R$ ${a.valor},00</strong></p>
+                </div>
+            </div>
+            <div class="appt-right">
+                <button class="btn btn-primary btn-sm" onclick="confirmarAtendimento(this, '${a.cliente}', ${a.valor})">✓ Confirmar</button>
+                <button class="btn btn-outline btn-sm" onclick="showToast('Atendimento desmarcado')">Desmarcar</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function confirmarAtendimento(btn, cliente, valor) {
+    btn.textContent = '✓ Confirmado';
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+    adicionarSaldoItem(cliente, valor);
+    showToast(`Atendimento de ${cliente} confirmado! +R$ ${valor},00`);
+}
+
+function baterPonto(tipo, area) {
+    const now = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById(tipo + '-' + area).textContent = now;
+    showToast(`${tipo === 'entrada' ? 'Entrada' : 'Saída'} registrada às ${now}`);
+}
+
+function renderMaterials() {
+    const grid = document.getElementById('material-grid');
+    grid.innerHTML = materiais.map(m => `
+        <div class="material-card">
+            <div class="material-icon">${catIcon[m.cat] || '🧴'}</div>
+            <div class="material-info">
+                <h4>${m.nome}</h4>
+                <p>${m.cat.charAt(0).toUpperCase()+m.cat.slice(1)}${m.obs ? ' · ' + m.obs : ''}</p>
+            </div>
+            <span class="material-status ${statusClass[m.status]}">${statusLabel[m.status]}</span>
+        </div>
+    `).join('');
+}
+
+function openModal()  { document.getElementById('modal-higiene').classList.add('open'); }
+function closeModal() { document.getElementById('modal-higiene').classList.remove('open'); }
+
+function addMaterial() {
+    const nome   = document.getElementById('mat-nome').value.trim();
+    const cat    = document.getElementById('mat-cat').value;
+    const status = document.getElementById('mat-status').value;
+    const obs    = document.getElementById('mat-obs').value.trim();
+    if (!nome) { showToast('Informe o nome do material'); return; }
+    materiais.push({ nome, cat, status, obs });
+    renderMaterials();
+    closeModal();
+    document.getElementById('mat-nome').value = '';
+    document.getElementById('mat-obs').value  = '';
+    showToast('Material adicionado!');
+}
+
+let saldoItems = [];
+let saldoDia = 0;
+
+function adicionarSaldoItem(cliente, valor) {
+    saldoItems.push({ cliente, valor, hora: new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'}) });
+    saldoDia += valor;
+    renderSaldo();
+}
+
+function renderSaldo() {
+    document.getElementById('saldo-dia').textContent    = `R$ ${saldoDia.toFixed(2).replace('.',',')}`;
+    document.getElementById('saldo-semana').textContent = `R$ ${(saldoDia + 430).toFixed(2).replace('.',',')}`;
+    document.getElementById('saldo-total').textContent  = `R$ ${(saldoDia + 1250).toFixed(2).replace('.',',')}`;
+    const el = document.getElementById('saldo-items');
+    if (saldoItems.length === 0) {
+        el.innerHTML = '<p style="color:var(--warm-mid);font-size:0.9rem;">Nenhum atendimento confirmado ainda.</p>';
+        return;
+    }
+    el.innerHTML = saldoItems.map(i => `
+        <div class="saldo-item">
+            <div class="saldo-item-info">
+                <h4>${i.cliente}</h4>
+                <p>${i.hora}</p>
+            </div>
+            <div class="saldo-item-amount">+ R$ ${i.valor},00</div>
+        </div>
+    `).join('');
+}
+
+function retirarSaldo() {
+    if (saldoDia === 0) { showToast('Nenhum valor disponível para retirada.'); return; }
+    showToast(`Retirada de R$ ${saldoDia.toFixed(2).replace('.',',')} solicitada!`);
+    saldoDia = 0;
+    saldoItems = [];
+    renderSaldo();
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
 </body>
-
 </html>
