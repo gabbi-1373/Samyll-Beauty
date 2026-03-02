@@ -1,11 +1,202 @@
-<html>
-    <head>
-        <ttitle>Home Samyll Beauty</ttitle>
-    </head>
-    <body>
-        <div class="banner">
-            
-        </div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samyll Beauty — Agendamento</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="cliente.css">
+</head>
+<body>
 
-    </body>
+<nav>
+    <div class="navbar">
+        <div class="logo-area">
+            <span class="brand">Samyll Beauty</span>
+            <span class="sub">Agende seu horário</span>
+        </div>
+        <div class="nav-tabs">
+            <button class="active" onclick="openPanel('home', this)">🏠 Home</button>
+            <button onclick="openPanel('cabelo', this)">💇 Cabelo</button>
+            <button onclick="openPanel('sobrancelha', this)">✨ Sobrancelha</button>
+            <button onclick="openPanel('maquiagem', this)">💄 Maquiagem</button>
+            <button onclick="openPanel('unha', this)">💅 Unha</button>
+            <button onclick="openPanel('botox', this)">💉 Botox</button>
+            <button class="tab-contato" onclick="openPanel('contato', this)">📩 Contato</button>
+            <!-- sininho -->
+            <div class="bell-wrap">
+                <button class="bell-btn" id="bellBtn" onclick="toggleNotif()">🔔<span class="bell-dot" id="bellDot"></span></button>
+                <div class="notif-dropdown" id="notifDropdown">
+                    <div class="notif-hd">
+                        <h4>Notificações</h4>
+                        <button onclick="markAllRead()">Marcar lidas</button>
+                    </div>
+                    <div id="notifList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="main">
+
+    <!-- HOME -->
+    <div id="panel-home" class="panel active">
+        <div class="home-hero">
+            <h1>Bem-vinda ao Samyll Beauty ✨</h1>
+            <p>Hoje é <span id="data-hoje"></span> — escolha seu serviço e agende online!</p>
+        </div>
+        <div class="testimonials-title">Clientes que amaram o resultado 💬</div>
+        <div class="photo-grid">
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1560869713-7d0a29430803?w=400&q=80" alt="Cliente satisfeita">
+                <div class="photo-overlay">
+                    <p class="photo-quote">"Saí completamente renovada! Amei o resultado do cabelo."</p>
+                    <span class="photo-name">— Mariana S.</span>
+                </div>
+            </div>
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80" alt="Cliente satisfeita">
+                <div class="photo-overlay">
+                    <p class="photo-quote">"Atendimento incrível, voltarei sempre!"</p>
+                    <span class="photo-name">— Juliana C.</span>
+                </div>
+            </div>
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1487412912498-0447578fcca8?w=400&q=80" alt="Cliente satisfeita">
+                <div class="photo-overlay">
+                    <p class="photo-quote">"Maquiagem perfeita para o meu evento. Me senti linda!"</p>
+                    <span class="photo-name">— Fernanda M.</span>
+                </div>
+            </div>
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400&q=80" alt="Cliente satisfeita">
+                <div class="photo-overlay">
+                    <p class="photo-quote">"As unhas ficaram impecáveis, super caprichoso!"</p>
+                    <span class="photo-name">— Camila R.</span>
+                </div>
+            </div>
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&q=80" alt="Cliente satisfeita">
+                <div class="photo-overlay">
+                    <p class="photo-quote">"Lugar acolhedor, me senti em casa desde o início."</p>
+                    <span class="photo-name">— Patricia S.</span>
+                </div>
+            </div>
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=400&q=80" alt="Cliente satisfeita">
+                <div class="photo-overlay">
+                    <p class="photo-quote">"Sobrancelha perfeita! Profissional muito habilidosa."</p>
+                    <span class="photo-name">— Aline B.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CABELO -->
+    <div id="panel-cabelo" class="panel">
+        <div class="service-header">
+            <div class="icon-big">💇</div>
+            <h2>Cabelo — Agendar</h2>
+        </div>
+        <div class="schedule-grid" id="cabelo-list"></div>
+        <div class="booking-wrap" id="booking-cabelo"></div>
+    </div>
+
+    <!-- SOBRANCELHA -->
+    <div id="panel-sobrancelha" class="panel">
+        <div class="service-header">
+            <div class="icon-big">✨</div>
+            <h2>Sobrancelha — Agendar</h2>
+        </div>
+        <div class="schedule-grid" id="sobrancelha-list"></div>
+        <div class="booking-wrap" id="booking-sobrancelha"></div>
+    </div>
+
+    <!-- MAQUIAGEM -->
+    <div id="panel-maquiagem" class="panel">
+        <div class="service-header">
+            <div class="icon-big">💄</div>
+            <h2>Maquiagem — Agendar</h2>
+        </div>
+        <div class="schedule-grid" id="maquiagem-list"></div>
+        <div class="booking-wrap" id="booking-maquiagem"></div>
+    </div>
+
+    <!-- UNHA -->
+    <div id="panel-unha" class="panel">
+        <div class="service-header">
+            <div class="icon-big">💅</div>
+            <h2>Unhas — Agendar</h2>
+        </div>
+        <div class="schedule-grid" id="unha-list"></div>
+        <div class="booking-wrap" id="booking-unha"></div>
+    </div>
+
+    <!-- BOTOX -->
+    <div id="panel-botox" class="panel">
+        <div class="service-header">
+            <div class="icon-big">💉</div>
+            <h2>Botox Capilar — Agendar</h2>
+        </div>
+        <div class="schedule-grid" id="botox-list"></div>
+        <div class="booking-wrap" id="booking-botox"></div>
+    </div>
+
+    <!-- CONTATO -->
+    <div id="panel-contato" class="panel">
+        <div class="service-header">
+            <div class="icon-big">📩</div>
+            <h2>Fale Conosco</h2>
+        </div>
+        <div class="contato-grid">
+            <div class="contato-card">
+                <h3>Envie uma mensagem</h3>
+                <div class="form-group"><label>Seu nome</label><input type="text" placeholder="Como prefere ser chamada?"></div>
+                <div class="form-group"><label>Assunto</label>
+                    <select>
+                        <option>Dúvida sobre serviço</option>
+                        <option>Confirmação de agendamento</option>
+                        <option>Informações de preço</option>
+                        <option>Outro</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Mensagem</label><textarea rows="4" placeholder="Escreva sua mensagem aqui…"></textarea></div>
+                <button class="btn btn-rose" onclick="showToast('Mensagem enviada! Retornaremos em breve 💬')">Enviar mensagem</button>
+            </div>
+            <div class="contato-card">
+                <h3>Onde nos encontrar</h3>
+                <div class="info-row"><div class="info-ico">📍</div><div><div class="info-lbl">Endereço</div><div class="info-val">Rua das Flores, 142 — Centro</div></div></div>
+                <div class="info-row"><div class="info-ico">📱</div><div><div class="info-lbl">WhatsApp</div><div class="info-val">(00) 9 0000-0000</div></div></div>
+                <div class="info-row"><div class="info-ico">🕐</div><div><div class="info-lbl">Horário</div><div class="info-val">Seg–Sáb: 08h às 19h</div></div></div>
+                <div class="info-row"><div class="info-ico">📸</div><div><div class="info-lbl">Instagram</div><div class="info-val">@samyllbeauty</div></div></div>
+                <a href="https://wa.me/5500000000000" target="_blank" style="text-decoration:none;display:block;margin-top:18px">
+                    <button class="btn btn-green" style="width:100%">💬 Chamar no WhatsApp</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- MODAL: dados da cliente para confirmar agendamento -->
+<div class="modal-overlay" id="modal-agend">
+    <div class="modal">
+        <h3>Confirmar Agendamento</h3>
+        <div id="modal-resumo" style="margin-bottom:18px"></div>
+        <div class="form-group"><label>Seu nome</label><input type="text" id="ag-nome" placeholder="Como prefere ser chamada?"></div>
+        <div class="form-group"><label>Telefone / WhatsApp</label><input type="tel" id="ag-tel" placeholder="(00) 9 0000-0000"></div>
+        <div class="modal-actions">
+            <button class="btn btn-rose" onclick="finalizarAgendamento()">✓ Confirmar</button>
+            <button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<a class="wa-float" href="https://wa.me/5500000000000" target="_blank" title="WhatsApp">💬</a>
+
+<script src="cliente.js"></script>
+</body>
 </html>
